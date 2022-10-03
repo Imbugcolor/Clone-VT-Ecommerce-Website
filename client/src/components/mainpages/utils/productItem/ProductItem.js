@@ -1,5 +1,6 @@
 import React from 'react'
 import BtnRender from './BtnRender'
+import Rating from '../Rating/Rating'
 
 function ProductItem({ product, isAdmin }) {
   return (
@@ -11,6 +12,10 @@ function ProductItem({ product, isAdmin }) {
 
         <div className="product_box">
             <h2 title={product.title}>{product.title}</h2>
+            <Rating
+            value={product.rating}
+            text={`${product.numReviews} reviews`}
+            />
             <span>${product.price}</span>
             <p>{product.description}</p>
         </div>

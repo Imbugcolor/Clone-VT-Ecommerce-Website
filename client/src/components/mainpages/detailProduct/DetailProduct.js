@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from 'react'
 import {useParams, Link} from 'react-router-dom'
 import {GlobalState} from '../../../GlobalState'
 import ProductItem from '../utils/productItem/ProductItem'
+import moment from 'moment'
 
 function DetailProduct() {
     const params = useParams()
@@ -47,7 +48,23 @@ function DetailProduct() {
                     </Link>
                 </div>
             </div>
-
+            <div className='Reviews'>
+                <h6>REVIEWS</h6>
+                {
+                   detailProduct.reviews.length === 0 && (
+                        <p>No Reviews</p>
+                   )
+                }
+                {
+                    detailProduct.reviews.map(review => (
+                        <div className='review' key={review._id}> 
+                            <strong>{review.name}</strong>
+                            <span>{moment(review.createdAt).calendar()}</span>
+                            <p>{review.comment}</p>
+                        </div>
+                    ) )
+                }
+            </div>           
             <div>
                 <h2>Related products</h2>
                 <div className="products">
