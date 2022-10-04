@@ -1,54 +1,56 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IoIosStar } from "react-icons/io";
+import { IoIosStarHalf } from "react-icons/io";
+import { IoIosStarOutline } from "react-icons/io";
 
 const Rating = ({ value, text, color }) => {
   return (
     <div className='rating'>
       <span style={{ color }}>
-        <FontAwesomeIcon icon={
+        {
             value >= 1
-              ? 'fas fa-star'
+              ? <IoIosStar />
               : value >= 0.5
-              ? 'fas fa-star-half-alt'
-              : 'far fa-star'
-          } /> 
+              ? <IoIosStarHalf />
+              : <IoIosStarOutline />
+          } 
       </span>
       <span style={{ color }}>
-        <FontAwesomeIcon icon={
+        {
               value >= 2
-                ? 'fas fa-star'
+                ? <IoIosStar />
                 : value >= 1.5
-                ? 'fas fa-star-half-alt'
-                : 'far fa-star'
-            } /> 
+                ? <IoIosStarHalf />
+                : <IoIosStarOutline />
+        } 
       </span>
       <span style={{ color }}>
-        <FontAwesomeIcon icon={
+        {
               value >= 3
-                ? 'fas fa-star'
+                ? <IoIosStar />
                 : value >= 2.5
-                ? 'fas fa-star-half-alt'
-                : 'far fa-star'
-            } /> 
+                ? <IoIosStarHalf />
+                : <IoIosStarOutline />
+        }  
         </span>
       <span style={{ color }}>
-        <FontAwesomeIcon icon={
+        {
               value >= 4
-                ? 'fas fa-star'
+                ? <IoIosStar />
                 : value >= 3.5
-                ? 'fas fa-star-half-alt'
-                : 'far fa-star'
-            } /> 
+                ? <IoIosStarHalf />
+                : <IoIosStarOutline />
+        }  
       </span>
       <span style={{ color }}>
-        <FontAwesomeIcon icon={
+        {
               value >= 5
-                ? 'fas fa-star'
+                ? <IoIosStar />
                 : value >= 4.5
-                ? 'fas fa-star-half-alt'
-                : 'far fa-star'
-            } /> 
+                ? <IoIosStarHalf />
+                : <IoIosStarOutline />
+        }  
       </span>
       <span>{text && text}</span>
     </div>

@@ -3,6 +3,7 @@ import {useParams, Link} from 'react-router-dom'
 import {GlobalState} from '../../../GlobalState'
 import ProductItem from '../utils/productItem/ProductItem'
 import moment from 'moment'
+import Rating from '../utils/Rating/Rating'
 
 function DetailProduct() {
     const params = useParams()
@@ -39,6 +40,7 @@ function DetailProduct() {
                         <h2>{detailProduct.title}</h2>
                         <h6>#id: {detailProduct.product_id}</h6>
                     </div>
+                    <Rating value={detailProduct.rating}/>
                     <span>$ {detailProduct.price}</span>
                     <p>{detailProduct.description}</p>
                     <p>{detailProduct.content}</p>
@@ -59,6 +61,7 @@ function DetailProduct() {
                     detailProduct.reviews.map(review => (
                         <div className='review' key={review._id}> 
                             <strong>{review.name}</strong>
+                            <Rating value={review.rating}/>
                             <span>{moment(review.createdAt).calendar()}</span>
                             <p>{review.comment}</p>
                         </div>

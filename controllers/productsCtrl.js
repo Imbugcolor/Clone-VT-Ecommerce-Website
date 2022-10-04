@@ -111,7 +111,7 @@ const productsCtrl = {
     
             if(product) {
                 const alreadyReviewed = product.reviews.find(
-                    (r) => r.user?.toString() === req.user.id.toString()
+                    (r) => r.user.toString() === req.user.id.toString()
                 )
                 if(alreadyReviewed){
                     return res.status(400).json({msg: 'The product already reviewed.'})
