@@ -34,8 +34,12 @@ function DetailProduct() {
                 headers: {Authorization: token}
             })
             setCallback(!callback)
+            setRating(0)
+            setComment('')
             alert(res.data.msg)
         } catch (err) {
+            setRating(0)
+            setComment('')
             alert(err.response.data.msg)
         }
     }

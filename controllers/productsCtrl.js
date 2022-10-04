@@ -1,4 +1,5 @@
 const Products = require('../models/productsModel')
+const Users = require('../models/userModels')
 
 //Filter, sorting and paginating
 
@@ -108,7 +109,8 @@ const productsCtrl = {
         try {
             const {rating, comment} = req.body;
             const product = await Products.findById(req.params.id);
-            const username = await Us
+            const user = await Users.findById(req.user.id);
+            const userName = user.username
             if(product) {
                 const alreadyReviewed = product.reviews.find(
                     (r) => r.user.toString() === req.user.id.toString()
@@ -117,7 +119,7 @@ const productsCtrl = {
                     return res.status(400).json({msg: 'The product already reviewed.'})
                 }
                 const review = {
-                    name: req.user.name,
+                    name: userName,
                     rating: Number(rating),
                     comment,
                     user: req.user.id
