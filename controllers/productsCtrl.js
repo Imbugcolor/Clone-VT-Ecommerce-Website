@@ -108,7 +108,7 @@ const productsCtrl = {
         try {
             const {rating, comment} = req.body;
             const product = await Products.findById(req.params.id);
-    
+            const username = await Us
             if(product) {
                 const alreadyReviewed = product.reviews.find(
                     (r) => r.user.toString() === req.user.id.toString()

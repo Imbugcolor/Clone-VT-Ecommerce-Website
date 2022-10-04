@@ -4,6 +4,8 @@ import {GlobalState} from '../../../GlobalState'
 import ProductItem from '../utils/productItem/ProductItem'
 import moment from 'moment'
 import Rating from '../utils/Rating/Rating'
+import axios from 'axios'
+
 
 function DetailProduct() {
     const params = useParams()
@@ -11,7 +13,11 @@ function DetailProduct() {
     const [products] = state.productsAPI.products
     const addCart = state.userAPI.addCart
     const [detailProduct, setDetailProduct] = useState([])
-
+    const [rating, setRating] = useState(0)
+    const [comment, setComment] = useState('')
+    const [isLogged] = state.userAPI.isLogged
+    const [token] = state.token
+    const [callback, setCallback] = state.productsAPI.callback
     useEffect(() => {
         if (params.id) {
 
@@ -21,6 +27,19 @@ function DetailProduct() {
         }
     }, [params.id, products])
 
+    const submitReviewHandler = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.post(`/api/products/${params.id}/review`, {rating, comment},{
+                headers: {Authorization: token}
+            })
+            setCallback(!callback)
+            alert(res.data.msg)
+        } catch (err) {
+            alert(err.response.data.msg)
+        }
+    }
+    
     if (detailProduct.length === 0) return null
     return (
         <>
@@ -67,7 +86,45 @@ function DetailProduct() {
                         </div>
                     ) )
                 }
-            </div>           
+            </div>
+                {isLogged ? (
+                    <form className="form" onSubmit={submitReviewHandler}>
+                    <div>
+                    <h2>Write a customer review</h2>
+                    </div>
+                    <div>
+                    <label htmlFor="rating">Rating</label>
+                    <select id="rating" value={rating}
+                    onChange={(e) => setRating(e.target.value)}>
+                        <option value="">Select</option>
+                        <option value="1">1- Bad</option>
+                        <option value="2">2- Fair</option>
+                        <option value="3">3- Good</option>
+                        <option value="4">4- Very good</option>
+                        <option value="5">5- Excelent</option>
+
+                    </select>
+                    </div>
+                    <div>
+                    <label htmlFor="comment">Comment</label>
+                    <textarea
+                        id="comment"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                    </div>
+                
+                    <div>
+                    <label />
+                    <button className="primary" type="submit">
+                        Submit
+                    </button>
+                    </div>
+                    
+                </form>
+                    
+            ) : (<h4>Please <Link to='/login'
+            >sign in</Link>to write a review</h4>)}           
             <div>
                 <h2>Related products</h2>
                 <div className="products">
