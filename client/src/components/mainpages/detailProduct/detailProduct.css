@@ -51,7 +51,7 @@
     opacity: 0.8;
 }
 
-.box-detail .cart {
+.box-detail .cart, .primary {
     background: #333;
     color: white;
     margin-top: 10px;
@@ -59,4 +59,33 @@
     display: inline-block;
     text-transform: uppercase;
     letter-spacing: 2px;
+    cursor: pointer;
 }
+.review-container{
+    display: flex;
+}
+.Reviews{
+    max-width: 500px;
+}
+.Reviews h3{
+    letter-spacing: 2px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.Reviews .review {
+    margin-top: 15px;
+}
+
+
+.Reviews .review span {
+    color: #000;
+    font-size: 15px;
+}
+
+.sign-in-msg{
+    background-color: #333;
+    color: #fff;
+    padding: 15px 0;
+}
+

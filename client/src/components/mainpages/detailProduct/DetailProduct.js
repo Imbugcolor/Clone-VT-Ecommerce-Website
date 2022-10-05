@@ -5,7 +5,7 @@ import ProductItem from '../utils/productItem/ProductItem'
 import moment from 'moment'
 import Rating from '../utils/Rating/Rating'
 import axios from 'axios'
-
+import { toast } from 'react-toastify'
 
 function DetailProduct() {
     const params = useParams()
@@ -36,11 +36,11 @@ function DetailProduct() {
             setCallback(!callback)
             setRating(0)
             setComment('')
-            alert(res.data.msg)
+            toast.success(res.data.msg)
         } catch (err) {
             setRating(0)
             setComment('')
-            alert(err.response.data.msg)
+            toast.warn(err.response.data.msg)
         }
     }
     
@@ -73,62 +73,66 @@ function DetailProduct() {
                     </Link>
                 </div>
             </div>
-            <div className='Reviews'>
-                <h6>REVIEWS</h6>
-                {
-                   detailProduct.reviews.length === 0 && (
-                        <p>No Reviews</p>
-                   )
-                }
-                {
-                    detailProduct.reviews.map(review => (
-                        <div className='review' key={review._id}> 
-                            <strong>{review.name}</strong>
-                            <Rating value={review.rating}/>
-                            <span>{moment(review.createdAt).calendar()}</span>
-                            <p>{review.comment}</p>
-                        </div>
-                    ) )
-                }
-            </div>
-                {isLogged ? (
+            <div className='review-section'>
+                <div className='Reviews'>
+                    <h3>REVIEWS</h3>
+                    {
+                    detailProduct.reviews.length === 0 && (
+                            <p>No Reviews</p>
+                    )
+                    }
+                    {
+                        detailProduct.reviews.map(review => (
+                            <div className='review' key={review._id}> 
+                                <strong>{review.name}</strong>
+                                <Rating value={review.rating}/>
+                                <span>{moment(review.createdAt).calendar()}</span>
+                                <p>{review.comment}</p>
+                            </div>
+                        ) )
+                    }
+                </div>
+                    {isLogged ? (
+                      
                     <form className="form" onSubmit={submitReviewHandler}>
-                    <div>
-                    <h2>Write a customer review</h2>
-                    </div>
-                    <div>
-                    <label htmlFor="rating">Rating</label>
-                    <select id="rating" value={rating}
-                    onChange={(e) => setRating(e.target.value)}>
-                        <option value="">Select</option>
-                        <option value="1">1- Bad</option>
-                        <option value="2">2- Fair</option>
-                        <option value="3">3- Good</option>
-                        <option value="4">4- Very good</option>
-                        <option value="5">5- Excelent</option>
+                        <div>
+                        <h2>Write a customer review</h2>
+                        </div>
+                        <div>
+                        <label htmlFor="rating">Rating</label>
+                        <select id="rating" value={rating}
+                        onChange={(e) => setRating(e.target.value)} required>
+                            <option value="">Select</option>
+                            <option value="1">1- Bad</option>
+                            <option value="2">2- Fair</option>
+                            <option value="3">3- Good</option>
+                            <option value="4">4- Very good</option>
+                            <option value="5">5- Excelent</option>
 
-                    </select>
-                    </div>
-                    <div>
-                    <label htmlFor="comment">Comment</label>
-                    <textarea
-                        id="comment"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                    ></textarea>
-                    </div>
-                
-                    <div>
-                    <label />
-                    <button className="primary" type="submit">
-                        Submit
-                    </button>
-                    </div>
+                        </select>
+                        </div>
+                        <div>
+                        <label htmlFor="comment">Comment</label>
+                        <textarea
+                            id="comment"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            required
+                        ></textarea>
+                        </div>
                     
-                </form>
-                    
-            ) : (<h4>Please <Link to='/login'
-            >sign in</Link>to write a review</h4>)}           
+                        <div>
+                        <label />
+                        <button className="primary" type="submit">
+                            Submit
+                        </button>
+                        </div>
+                        
+                    </form>
+                        
+                    ) : (<h4 className='sign-in-msg'>Please <Link to='/login' style={{color: 'crimson'}}
+                    >sign in</Link> to write a review</h4>)}           
+            </div>
             <div>
                 <h2>Related products</h2>
                 <div className="products">

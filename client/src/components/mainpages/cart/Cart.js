@@ -58,7 +58,6 @@ function Cart() {
       })
       setCart([...cart])
       addToCart(cart)
-      setCallback(!callback)
     }
   }
 
