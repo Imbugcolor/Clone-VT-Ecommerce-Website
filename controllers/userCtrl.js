@@ -7,8 +7,9 @@ const userCtrl = {
         try {
             const {username, email, password} = req.body;
             const user = await Users.findOne({email})
+            if(validateEmail(email) === false) return res.status(400).json({msg: "You have entered an invalid email address!"})
             if(user) return res.status(400).json({msg: "The email already exists."})
-
+            
             if(password.length < 6)
                 return res.status(400).json({msg: 'Password is at least 6 characters long.'})
             
@@ -23,15 +24,15 @@ const userCtrl = {
             await newUser.save()
 
             //Then create jsonwebtoken to authentication
-            const accesstoken = createAccessToken({id: newUser._id, name: newUser.username})
-            const refreshtoken = createRefreshToken({id: newUser._id, name: newUser.username})
+            // const accesstoken = createAccessToken({id: newUser._id, name: newUser.username})
+            // const refreshtoken = createRefreshToken({id: newUser._id, name: newUser.username})
             
-            res.cookie('refreshtoken', refreshtoken, {
-                httpOnly: true,
-                path: '/user/refresh_token'
-            })
-            res.json({accesstoken})
-            // res.json({msg: "Register success!"})
+            // res.cookie('refreshtoken', refreshtoken, {
+            //     httpOnly: true,
+            //     path: '/user/refresh_token'
+            // })
+            // res.json({accesstoken})
+            res.json({msg: "Register success!"})
 
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -120,7 +121,16 @@ const userCtrl = {
         }
     }
 }
-
+const validateEmail = (email) =>
+{
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(email.match(mailformat))
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
 const createAccessToken = (user) => {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'})
 }

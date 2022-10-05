@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function Register() {
   const [user, setUser] = useState({
@@ -19,11 +20,12 @@ function Register() {
     try {
       await axios.post('/user/register', {...user})
 
-      localStorage.setItem('firstLogin', true)
+      setUser({username: '', email: '', password: ''})
 
-      window.location.href = "/"
+      toast.success('Register successfully')
+
     } catch (error) {
-      alert(error.response.data.msg)
+      toast.error(error.response.data.msg)
     }
   }
 

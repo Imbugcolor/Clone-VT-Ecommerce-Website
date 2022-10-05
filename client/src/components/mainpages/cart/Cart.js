@@ -52,11 +52,13 @@ function Cart() {
     if(window.confirm('Do you want to delete this product?')){
       cart.forEach((item, index) => {
         if(item._id === id){
+          item.quantity = 0
           cart.splice(index, 1)
         }
       })
       setCart([...cart])
       addToCart(cart)
+      setCallback(!callback)
     }
   }
 
@@ -115,7 +117,9 @@ function Cart() {
               return actions.order.create({
                 purchase_units: [{
                   amount: {
-                    value: total.toString()
+                    value: cart.reduce((prev, item) => {
+                      return prev + (item.price * item.quantity)
+                    }, 0)
                   }
                 }]
               });
